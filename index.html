@@ -74,7 +74,18 @@
                     <p>I'm deeply interested in areas like network security, digital forensics, and infrastructure automation. My curiosity for how systems operate—and how they can be made more secure—drives me to constantly learn and evolve in the ever-changing world of tech.</p>
                     <p>You'll often find me spending time on TryHackMe, sharpening my skills through Capture The Flag (CTF) challenges and hands-on labs that push my problem-solving mindset. I love digging into complex issues, learning how things break, and figuring out how to fix them securely.</p>
                     <p>I believe in continuous growth, collaboration, and building solutions that make a real impact.</p>
+                    <!-- Add this after the last <p> tag -->
+                    <div class="cv-download" style="margin-top: 2rem;">
+                        <a href="https://1yx6sr-my.sharepoint.com/:b:/g/personal/harikrishnan9602_1yx6sr_onmicrosoft_com/EdAARn_zWKJBt4w9SKm5B14Bpx6wzTGU9_VTMwd-5Ee4RQ?e=UbsAQM" 
+                        download="Harikrishnan_VJ_CV.pdf" 
+                        class="btn btn-outline">
+                            <i class="fas fa-download"></i> Download CV
+                        </a>
+                    </div>
                 </div>
+                
+                
+
                 <div class="about-image">
                     <div class="image-placeholder">
                         <img src="images/profile.jpg" alt="Description of the image" width="200" height="250">
@@ -428,19 +439,38 @@
                     </div>
                 </div>
                 
-               <form action="mail.php" method="POST" class="contact-form glass">
-                    <h3>Send me a message</h3>
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Your Message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
-                </form>
+               <form action="https://formspree.io/f/xgvyggba" method="POST" class="contact-form glass" id="contactForm">
+                <h3>Send me a message</h3>
+                
+                <!-- Name Field -->
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+                
+                <!-- Email Field -->
+                <div class="form-group">
+                    <input type="email" name="_replyto" placeholder="Your Email" required>
+                </div>
+                
+                <!-- Message Field -->
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                </div>
+                
+                <!-- Honeypot (spam prevention) -->
+                <input type="text" name="_gotcha" style="display:none">
+                
+                <!-- Redirect after submission (optional) -->
+                <input type="hidden" name="_next" value="/thank-you.html">
+                
+                <!-- Email subject -->
+                <input type="hidden" name="_subject" value="New message from your website">
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
             </div>
         </section>
         
