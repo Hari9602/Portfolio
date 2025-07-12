@@ -35,37 +35,50 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Contact form submission
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = {
-                name: this.querySelector('input[type="text"]').value,
-                email: this.querySelector('input[type="email"]').value,
-                message: this.querySelector('textarea').value
-            };
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
 
-            // Here you would typically send the data to a server
-            console.log('Form submitted:', formData);
-            
-            // Show success message
-            const successMsg = document.createElement('div');
-            successMsg.className = 'form-success glass';
-            successMsg.innerHTML = `
-                <i class="fas fa-check-circle"></i>
-                <p>Thank you! Your message has been sent.</p>
-            `;
-            this.parentNode.insertBefore(successMsg, this.nextSibling);
-            
-            // Remove message after 5 seconds
-            setTimeout(() => {
-                successMsg.classList.add('fade-out');
-                setTimeout(() => successMsg.remove(), 500);
-            }, 5000);
-            
-            this.reset();
-        });
-    }
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                // Success message
+                const successMsg = document.createElement('div');
+                successMsg.className = 'form-success glass';
+                successMsg.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <p>Message sent! I'll reply soon.</p>
+                `;
+                form.parentNode.insertBefore(successMsg, form.nextSibling);
+                form.reset();
+
+                // Remove message after 5 seconds
+                setTimeout(() => {
+                    successMsg.classList.add('fade-out');
+                    setTimeout(() => successMsg.remove(), 500);
+                }, 5000);
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            alert('Error: Could not send message. Please try again later.');
+        } finally {
+            // Reset button
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
+    });
 
     // Certification verification handler
     const certCards = document.querySelectorAll('.cert-card');
